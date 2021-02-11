@@ -1,0 +1,2 @@
+C:/Users/Seinjin/Programming/OpenGL/OpenGLTest/OpenGLTest/OpenGLTest/src/vendor/glm/out/build/x64-Debug (default)/CMakeFiles/edit_cache.dir
+C:/Users/Seinjin/Programming/OpenGL/OpenGLTest/OpenGLTest/OpenGLTest/src/vendor/glm/out/build/x64-Debug (default)/CMakeFiles/rebuild_cache.dir
