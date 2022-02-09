@@ -29,5 +29,6 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
     va.Bind();
     ib.Bind();
 
+    GLCall(glEnable(GL_CULL_FACE));
     GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
