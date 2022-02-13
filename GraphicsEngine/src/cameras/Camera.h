@@ -7,7 +7,7 @@ namespace camera
 {
 	class Camera
 	{
-	private:
+	protected:
 		glm::mat4 projection;
 		glm::mat4 view;
 
@@ -16,6 +16,6 @@ namespace camera
 
 		glm::mat4 GetProjectionView();
 
-		void SetView(glm::mat4 view);
+		glm::mat4& GetView() { return view; };
 	};
 }

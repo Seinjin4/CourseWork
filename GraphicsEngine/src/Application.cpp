@@ -25,7 +25,7 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-#include "cameras/Camera.h"
+#include "cameras/PerspectiveCamera.h"
 
 int main(void)
 {
@@ -63,10 +63,9 @@ int main(void)
 
         geometry::CubeGeometry cube;
 
-        glm::mat4 proj = glm::perspective(glm::radians(45.0f), (GLfloat)960.0f / (GLfloat)540.0f, 0.1f, 1500.0f);
         glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 
-        camera::Camera camera(proj, view);
+        camera::PerspectiveCamera camera(glm::radians(45.0f), (GLfloat)960.0f / (GLfloat)540.0f, 0.1f, 150.0f, view);
 
         Shader shader("res/shaders/NormalVisualization.shader");
         shader.Bind();
@@ -84,6 +83,7 @@ int main(void)
         {
 
             renderer.Clear();
+            camera.UpdateProjectionMatrix();
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
@@ -107,6 +107,7 @@ int main(void)
                 ImGui::Begin("Panel");
                 ImGui::SliderFloat3("TranslationA", &translation.x, -20.0f, 20.0f);
                 ImGui::SliderFloat("Rotation", &rotation.x, -6.0f, 6.0f);
+                ImGui::SliderFloat("FOV", &camera.GetFov(), 0.01f, 1.57079633f);
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
                 ImGui::End();
             }

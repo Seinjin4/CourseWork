@@ -63,6 +63,9 @@
     <ClCompile Include="src\cameras\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\cameras\PerspectiveCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -123,6 +126,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\cameras\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cameras\PerspectiveCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
