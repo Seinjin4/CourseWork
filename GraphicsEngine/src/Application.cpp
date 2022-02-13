@@ -25,6 +25,8 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+#include "cameras/Camera.h"
+
 int main(void)
 {
     GLFWwindow* window;
@@ -64,7 +66,9 @@ int main(void)
         glm::mat4 proj = glm::perspective(glm::radians(45.0f), (GLfloat)960.0f / (GLfloat)540.0f, 0.1f, 1500.0f);
         glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 
-        Shader shader("res/shaders/Basic.shader");
+        camera::Camera camera(proj, view);
+
+        Shader shader("res/shaders/NormalVisualization.shader");
         shader.Bind();
 
         Renderer renderer;
@@ -87,7 +91,7 @@ int main(void)
 
             {
                 glm::mat4 model = glm::translate(glm::mat4(1.0f), translation) * glm::rotate(glm::mat4(1.0f), rotation.x, glm::normalize(glm::vec3(1.0f, 1.0f, 0.0f)));
-                glm::mat4 mvp = proj * view * model;
+                glm::mat4 mvp = camera.GetProjectionView() * model;
                 shader.SetUnifromMat4f("u_MVP", mvp);
                 renderer.Draw(cube.GetVertexArray(), cube.GetIndexBuffer(), shader);
             }
