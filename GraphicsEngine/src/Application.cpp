@@ -77,8 +77,8 @@ int main(void)
         ImGui_ImplOpenGL3_Init("#version 130");
         ImGui::StyleColorsDark();
 
-        glm::vec3 translation = glm::vec3(0.0f, 0.0f, -20.0f);
-        glm::vec1 rotation = glm::vec1(0.0f);
+        glm::vec3 translation = glm::vec3(0.0f, 0.0f, -10.0f);
+        glm::vec1 rotation = glm::vec1(2.2f);
         while (!glfwWindowShouldClose(window))
         {
 
@@ -88,13 +88,6 @@ int main(void)
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-
-            {
-                glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f)) * glm::rotate(glm::mat4(1.0f), rotation.x, glm::normalize(glm::vec3(1.0f, 1.0f, 0.0f)));
-                glm::mat4 mvp = camera.GetProjectionView() * model;
-                shader.SetUnifromMat4f("u_MVP", mvp);
-                renderer.Draw(cube.GetVertexArray(), cube.GetIndexBuffer(), shader);
-            }
 
             {
                 glm::mat4 model = glm::translate(glm::mat4(1.0f), translation) * glm::rotate(glm::mat4(1.0f), rotation.x, glm::normalize(glm::vec3(1.0f, 1.0f, 0.0f)));
