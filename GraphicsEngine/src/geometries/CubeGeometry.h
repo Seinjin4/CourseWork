@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Geometry.h"
+#include "GeometryData.h"
 #include "VertexBufferLayout.h"
 
 namespace geometry
@@ -77,9 +77,12 @@ namespace geometry
 		33, 34, 35
 	};
 
-	class CubeGeometry : public Geometry
+	class CubeGeometry
 	{
 	private:
+		GeometryData geometryData;
+		VertexBufferLayout vbLayout;
+
 		VertexBufferLayout GenerateLayout()
 		{
 			vbLayout.Push<float>(3);
@@ -89,15 +92,10 @@ namespace geometry
 		}
 
 	public:
-		CubeGeometry():
-			Geometry(
-				cubeVertexBufferData,
-				36 * (6 * sizeof(float)),
-				GenerateLayout(),
-				cubeIndexBufferData,
-				(const unsigned int) 36
-			)
-		{
+
+		CubeGeometry() {
+			geometryData.CreateVertexArray(cubeVertexBufferData, 36 * (6 * sizeof(float)), GenerateLayout());
+			geometryData.CreateIndexBuffer(cubeIndexBufferData, (const unsigned int)36);
 		};
 	};
 }
