@@ -22,10 +22,9 @@ void Renderer::Clear() const
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
-void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
+void Renderer::DrawTriangles(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
 {
     shader.Bind();
-    //shader.SetUnifrom4f("u_Color", 0.3f, 0.3f, 0.8f, 1.0f);
     va.Bind();
     ib.Bind();
 
@@ -35,4 +34,20 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
     glDepthFunc(GL_LEQUAL);
 
     GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::DrawLines(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
+{
+    shader.Bind();
+    va.Bind();
+    ib.Bind();
+
+    GLCall(glCullFace(GL_FRONT_AND_BACK));
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+
+    glLineWidth((GLfloat)10.0f);
+
+    GLCall(glDrawElements(GL_LINE_STRIP, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
