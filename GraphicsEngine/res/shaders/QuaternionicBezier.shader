@@ -5,9 +5,9 @@ layout(location = 0) in float time;
 
 out vec4 v_color;
 
-uniform vec4 u_Pq0;
-uniform vec4 u_Pq1;
-uniform vec4 u_Q;
+uniform vec4 Pq0;
+uniform vec4 Pq1;
+uniform vec4 Q;
 uniform mat4 u_MVP;
 
 vec4 getInverse(vec4 inV)
@@ -27,17 +27,18 @@ vec4 quat_mult(vec4 q1, vec4 q2)
 
 void main()
 {
-    vec4 w0 = getInverse(u_Q - u_Pq0); // make inverse
-    vec4 w1 = getInverse(u_Pq1 - u_Q); // make inverse
+    vec4 w0 = getInverse(Q - Pq0);
+    vec4 w1 = getInverse(Pq1 - Q);
 
-    //vec4 newPoint = (u_Pq0 * w0 * (1 - time.x) + u_Pq1 * w1 * time.x) * getInverse(w0 * (1 - time.x) + w1 * time.x);
-    vec4 newPoint = quat_mult((quat_mult(u_Pq0, w0) * (1 - time) + quat_mult(u_Pq1, w1) * time), getInverse(w0 * (1 - time) + w1 * time));
-    //vec4 newPoint = u_Pq0 * (1 - time) + u_Pq1 * time;
+    //vec4 newPoint = quat_mult((quat_mult(Pq0, w0) * (1 - time) + quat_mult(Pq1, w1) * time), getInverse(w0 * (1 - time) + w1 * time));
 
-    newPoint.w = 1.0f;
+    vec4 numer = mix(quat_mult(Pq0, w0), quat_mult(Pq1, w1), time);
+    vec4 denom = mix(w0, w1, time);
+
+    vec4 newPoint = quat_mult(numer, getInverse(denom));
 
     gl_Position = u_MVP * vec4(newPoint.x, newPoint.y, newPoint.z, 1.0f);
-    v_color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    v_color = vec4(newPoint.w, 1.0f, 1.0f, 1.0f);
 };
 
 #shader fragment
