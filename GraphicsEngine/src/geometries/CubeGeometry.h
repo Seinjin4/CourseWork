@@ -95,7 +95,10 @@ namespace geometry
 
 		CubeGeometry() {
 			geometryData.CreateVertexArray(cubeVertexBufferData, 36 * (6 * sizeof(float)), GenerateLayout());
-			geometryData.CreateIndexBuffer(cubeIndexBufferData, (const unsigned int)36);
+			geometryData.CreateIndexBuffer(cubeIndexBufferData, 36);
 		};
+
+		const VertexArray& GetVertexArray() { return geometryData.GetVertexArray(); };
+		const IndexBuffer& GetIndexBuffer() { return geometryData.GetIndexBuffer(); };
 	};
 }

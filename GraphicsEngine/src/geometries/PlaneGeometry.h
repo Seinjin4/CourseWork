@@ -5,7 +5,7 @@
 
 namespace geometry
 {
-	class BezierIntervalGeometry
+	class PlaneGeometry
 	{
 	private:
 		GeometryData geometryData;
@@ -13,13 +13,12 @@ namespace geometry
 
 		VertexBufferLayout GenerateLayout();
 
-		void GenerateVertexBufferData(int size);
+		void GenerateVertexBufferData(int segments);
 
-		void GenerateIndexBufferData(int size);
-
+		void GenerateIndexBufferData(int segments);
 
 	public:
-		BezierIntervalGeometry(const unsigned int size);
+		PlaneGeometry(const unsigned int segments);
 
 		const VertexArray& GetVertexArray() { return geometryData.GetVertexArray(); };
 		const IndexBuffer& GetIndexBuffer() { return geometryData.GetIndexBuffer(); };

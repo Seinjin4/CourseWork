@@ -22,32 +22,53 @@ void Renderer::Clear() const
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
-void Renderer::DrawTriangles(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
+void Renderer::Bind(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
 {
     shader.Bind();
     va.Bind();
     ib.Bind();
+}
+
+void Renderer::DrawTriangles(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
+{
+    Bind(va, ib, shader);
 
     GLCall(glEnable(GL_CULL_FACE));
+    //GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
+    EnableDepthTest();
 
     GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
 
-void Renderer::DrawLines(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
+void Renderer::DrawLineStrip(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, const float lineWidth) const
 {
-    shader.Bind();
-    va.Bind();
-    ib.Bind();
+    Bind(va, ib, shader);
 
-    GLCall(glCullFace(GL_FRONT_AND_BACK));
+    GLCall(glEnable(GL_CULL_FACE));
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
+    EnableDepthTest();
 
-    glLineWidth((GLfloat)10.0f);
+    glLineWidth((GLfloat)lineWidth);
 
     GLCall(glDrawElements(GL_LINE_STRIP, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::DrawLines(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, const float lineWidth) const
+{
+    Bind(va, ib, shader);
+
+    GLCall(glEnable(GL_CULL_FACE));
+
+    EnableDepthTest();
+
+    glLineWidth((GLfloat)lineWidth);
+
+    GLCall(glDrawElements(GL_LINES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::EnableDepthTest() const
+{
+    GLCall(glEnable(GL_DEPTH_TEST));
+    GLCall(glDepthFunc(GL_LEQUAL));
 }

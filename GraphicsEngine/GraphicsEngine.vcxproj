@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -149,6 +149,14 @@
   <ItemGroup>
     <ClCompile Include="src\cameras\Camera.cpp" />
     <ClCompile Include="src\cameras\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\geometries\BezierIntervalGeometry.cpp" />
+    <ClCompile Include="src\geometries\GeometryData.cpp" />
+    <ClCompile Include="src\geometries\GizmoGeometry.cpp" />
+    <ClCompile Include="src\geometries\PlaneGeometry.cpp" />
+    <ClCompile Include="src\geometries\SphereGeometry.cpp" />
+    <ClCompile Include="src\scenes\DupinPatchScene.cpp" />
+    <ClCompile Include="src\scenes\IScene.cpp" />
+    <ClCompile Include="src\scenes\QuaternionicBezierScene.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
@@ -166,14 +174,24 @@
     <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\BasicColor.shader" />
+    <None Include="res\shaders\dupin.shader" />
     <None Include="res\shaders\NormalVisualization.shader" />
+    <None Include="res\shaders\QuaternionicBezier.shader" />
+    <None Include="res\shaders\UVTest.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\cameras\Camera.h" />
     <ClInclude Include="src\cameras\PerspectiveCamera.h" />
     <ClInclude Include="src\geometries\CubeGeometry.h" />
-    <ClInclude Include="src\geometries\Geometry.h" />
+    <ClInclude Include="src\geometries\GeometryData.h" />
+    <ClInclude Include="src\geometries\BezierIntervalGeometry.h" />
+    <ClInclude Include="src\geometries\GizmoGeometry.h" />
     <ClInclude Include="src\geometries\PlaneGeometry.h" />
+    <ClInclude Include="src\geometries\SphereGeometry.h" />
+    <ClInclude Include="src\scenes\DupinPatchScene.h" />
+    <ClInclude Include="src\scenes\IScene.h" />
+    <ClInclude Include="src\scenes\QuaternionicBezierScene.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />

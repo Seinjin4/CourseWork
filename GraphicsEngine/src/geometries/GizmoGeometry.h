@@ -5,21 +5,17 @@
 
 namespace geometry
 {
-	class BezierIntervalGeometry
+	class GizmoGeometry
 	{
 	private:
 		GeometryData geometryData;
 		VertexBufferLayout vbLayout;
 
-		VertexBufferLayout GenerateLayout();
-
-		void GenerateVertexBufferData(int size);
-
-		void GenerateIndexBufferData(int size);
-
+		void GenerateLayout();
 
 	public:
-		BezierIntervalGeometry(const unsigned int size);
+
+		GizmoGeometry();
 
 		const VertexArray& GetVertexArray() { return geometryData.GetVertexArray(); };
 		const IndexBuffer& GetIndexBuffer() { return geometryData.GetIndexBuffer(); };

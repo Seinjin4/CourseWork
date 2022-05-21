@@ -19,6 +19,10 @@ class Renderer
 {
 public:
     void Clear() const;
+    void Bind(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
     void DrawTriangles(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
-    void DrawLines(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+    void DrawLineStrip(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, const float lineWidth) const;
+    void DrawLines(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, const float lineWidth) const;
+private:
+    void EnableDepthTest() const;
 };

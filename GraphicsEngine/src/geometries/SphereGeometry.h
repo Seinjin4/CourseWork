@@ -1,11 +1,16 @@
 #pragma once
 
+#include <array>
+
+#include "glm/glm.hpp"
+#include "glm/ext/scalar_constants.hpp"
+
 #include "GeometryData.h"
 #include "VertexBufferLayout.h"
 
 namespace geometry
 {
-	class BezierIntervalGeometry
+	class SphereGeometry
 	{
 	private:
 		GeometryData geometryData;
@@ -13,13 +18,8 @@ namespace geometry
 
 		VertexBufferLayout GenerateLayout();
 
-		void GenerateVertexBufferData(int size);
-
-		void GenerateIndexBufferData(int size);
-
-
 	public:
-		BezierIntervalGeometry(const unsigned int size);
+		SphereGeometry();
 
 		const VertexArray& GetVertexArray() { return geometryData.GetVertexArray(); };
 		const IndexBuffer& GetIndexBuffer() { return geometryData.GetIndexBuffer(); };

@@ -12,7 +12,7 @@ uniform mat4 u_MVP;
 
 vec4 getInverse(vec4 inV)
 {
-    return vec4(-inV.x, -inV.y, -inV.z, inV.w) / sqrt(inV.x * inV.x + inV.y * inV.y + inV.z * inV.z + inV.w * inV.w);
+    return vec4(-inV.x, -inV.y, -inV.z, inV.w) / (inV.x * inV.x + inV.y * inV.y + inV.z * inV.z + inV.w * inV.w);
 }
 
 vec4 quat_mult(vec4 q1, vec4 q2)
@@ -29,8 +29,6 @@ void main()
 {
     vec4 w0 = getInverse(Q - Pq0);
     vec4 w1 = getInverse(Pq1 - Q);
-
-    //vec4 newPoint = quat_mult((quat_mult(Pq0, w0) * (1 - time) + quat_mult(Pq1, w1) * time), getInverse(w0 * (1 - time) + w1 * time));
 
     vec4 numer = mix(quat_mult(Pq0, w0), quat_mult(Pq1, w1), time);
     vec4 denom = mix(w0, w1, time);

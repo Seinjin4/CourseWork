@@ -8,24 +8,23 @@
 
 #include "Renderer.h"
 
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "VertexBufferLayout.h"
-#include "Texture.h"
-#include "Shader.h"
-
-#include "geometries/CubeGeometry.h"
-#include "geometries/PlaneGeometry.h"
+//#include "VertexBuffer.h"
+//#include "IndexBuffer.h"
+//#include "VertexArray.h"
+//#include "VertexBufferLayout.h"
+//#include "Texture.h"
+//#include "Shader.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/quaternion.hpp"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-#include "cameras/PerspectiveCamera.h"
+#include "scenes/QuaternionicBezierScene.h"
+#include "scenes/DupinPatchScene.h"
 
 int main(void)
 {
@@ -40,7 +39,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(960, 540, "Graphics Engine", NULL, NULL);
+    window = glfwCreateWindow(1080, 1080, "Graphics Engine", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -61,14 +60,26 @@ int main(void)
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
 
+        /*geometry::BezierIntervalGeometry line(90);
+        geometry::GizmoGeometry gizmo;
+        geometry::SphereGeometry sphere;
         geometry::CubeGeometry cube;
+        geometry::PlaneGeometry plane(2);*/
 
-        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+        /*glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 
-        camera::PerspectiveCamera camera(glm::radians(45.0f), (GLfloat)960.0f / (GLfloat)540.0f, 0.1f, 150.0f, view);
+        camera::PerspectiveCamera camera(glm::radians(45.0f), (GLfloat)1080.0f / (GLfloat)1080.0f, 0.1f, 150.0f, view);*/
+        //float screanAspectRatio = (GLfloat)1080.0f / (GLfloat)1080.0f;
+        //camera::Camera camera(glm::ortho((GLfloat)-2.0f , (GLfloat)2.0f , (GLfloat)-2.0f, (GLfloat)2.0f, 0.1f, 150.0f), view);
 
-        Shader shader("res/shaders/NormalVisualization.shader");
-        shader.Bind();
+        /*Shader quaternionShader("res/shaders/QuaternionicBezier.shader");
+        Shader gizmoShader("res/shaders/BasicColor.shader");
+        Shader normalVisualization("res/shaders/NormalVisualization.shader");
+        Shader uvTest("res/shaders/UVTest.shader");
+        Shader dupin("res/shaders/dupin.shader");*/
+
+        //scenes::QuaternionicBezierScene scene;
+        scenes::DupinPatchScene scene;
 
         Renderer renderer;
 
@@ -77,30 +88,34 @@ int main(void)
         ImGui_ImplOpenGL3_Init("#version 130");
         ImGui::StyleColorsDark();
 
-        glm::vec3 translation = glm::vec3(0.0f, 0.0f, -10.0f);
-        glm::vec1 rotation = glm::vec1(2.2f);
+        float cameraPosW = 0.25f;
+        float cameraHeight = 0.0f;
+        float cameraDist = 5.0f;
+
         while (!glfwWindowShouldClose(window))
         {
-
             renderer.Clear();
-            camera.UpdateProjectionMatrix();
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            {
-                glm::mat4 model = glm::translate(glm::mat4(1.0f), translation) * glm::rotate(glm::mat4(1.0f), rotation.x, glm::normalize(glm::vec3(1.0f, 1.0f, 0.0f)));
-                glm::mat4 mvp = camera.GetProjectionView() * model;
-                shader.SetUnifromMat4f("u_MVP", mvp);
-                renderer.Draw(cube.GetVertexArray(), cube.GetIndexBuffer(), shader);
-            }
+            glm::mat4 view = glm::lookAt(
+                glm::vec3(
+                    glm::cos(glm::radians(360.0f) * cameraPosW) * cameraDist,
+                    cameraHeight,
+                    glm::sin(glm::radians(360.0f) * cameraPosW) * cameraDist),
+                glm::vec3(0.0f, 0.0f, 0.0f),
+                glm::vec3(0.0f, 1.0f, 0.0f)
+                );
+
+            scene.RenderScene(renderer, view);
 
             {
-                ImGui::Begin("Panel");
-                ImGui::SliderFloat3("TranslationA", &translation.x, -20.0f, 20.0f);
-                ImGui::SliderFloat("Rotation", &rotation.x, -6.0f, 6.0f);
-                ImGui::SliderFloat("FOV", &camera.GetFov(), 0.01f, 1.57079633f);
+                ImGui::Begin("Camera Controls");
+                ImGui::SliderFloat("Camera Position", &cameraPosW, 0.0f, 1.0f);
+                ImGui::SliderFloat("Camera Height", &cameraHeight, -10.0f, 10.0f);
+                ImGui::SliderFloat("Camera Distance", &cameraDist, 1.0f, 10.0f);
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
                 ImGui::End();
             }
