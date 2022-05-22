@@ -2,9 +2,9 @@
 
 namespace geometry
 {
-	float planeVertexBufferData[1024] = {};
+	float planeVertexBufferData[10024] = {};
 
-	unsigned int planeIndexBufferData[1024] = {};
+	unsigned int planeIndexBufferData[10024] = {};
 
 	VertexBufferLayout PlaneGeometry::GenerateLayout()
 	{

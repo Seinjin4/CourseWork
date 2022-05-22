@@ -1,6 +1,4 @@
 #include "QuaternionicBezierScene.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
 #include <vendor/imgui/imgui.h>
 
 namespace scenes
@@ -9,9 +7,9 @@ namespace scenes
         quaternionShader("res/shaders/QuaternionicBezier.shader"),
         normalVisualization("res/shaders/NormalVisualization.shader"),
         line(90),
-        u_q(glm::vec4(0.0f, 1.0f, 0.0f, 0.0f)),
-        u_Pq0(glm::vec4(1.0f, 0.0f, 0.0f, 0.0f)),
-        u_Pq1(glm::vec4(-1.0f, 0.0f, 0.0f, 0.0f))
+        u_q(0.0f, 1.0f, 0.0f, 0.0f),
+        u_Pq0(1.0f, 0.0f, 0.0f, 0.0f),
+        u_Pq1(-1.0f, 0.0f, 0.0f, 0.0f)
     {
     }
 

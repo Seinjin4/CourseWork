@@ -30,6 +30,7 @@ public:
 	void SetUnifrom1f(const std::string& name, float v);
 	void SetUnifrom1i(const std::string& name, int v);
 	void SetUnifromMat4f(const std::string& name, const glm::mat4& matrix);
+	void SetUnifromVec3f(const std::string& name, const glm::vec3& vec3);
 private:
 	unsigned int GetUniformLocations(const std::string& name);
 	unsigned int CompileShader(unsigned int type, const std::string& source);

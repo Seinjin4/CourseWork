@@ -10,7 +10,10 @@ out vec4 vecPos;
 out vec4 vecNormal;
 
 uniform mat4 MVP;
-uniform vec3 p;
+uniform vec3 p1;
+uniform vec3 p2;
+uniform vec3 p3;
+uniform vec3 p4;
 uniform int size;
 uniform float angle;
 
@@ -64,10 +67,15 @@ void main(void) {
 	vec4 nw[pointCount];
 	Point points[pointCount];
 
-	points[0].p = vec4(1.0, vec3(0.0));
+	/*points[0].p = vec4(1.0, vec3(0.0));
 	points[1].p = vec4(0.0, 1.0, vec2(0.0));
-	points[2].p = vec4(p, 0.); //vec4(-0.6, -0.8, vec2(0.0)); 
-	points[3].p = vec4(-1.0, vec3(0.0));
+	points[2].p = vec4(p, 0.0);
+	points[3].p = vec4(-1.0, vec3(0.0));*/
+
+	points[0].p = vec4(p1, 0.0);
+	points[1].p = vec4(p2, 0.0);
+	points[2].p = vec4(p3, 0.0);
+	points[3].p = vec4(p4,0.0);
 
 	vec4 v1 = vec4(15. / 17., 8. / 17., vec2(0.0));
 	vec4 v2 = vec4(-40. / 221., 75. / 221., 12. / 13., 0.);
@@ -107,14 +115,14 @@ void main(void) {
 	vec4 surf = qMult(numerator, inv_denom);
 
 	// Normals
-	//nor0 = normalize(cross(v1.xyz,v2.xyz));
-	//vec4 nor = qMult(denom, vec4(nor0, 0.));
-	//nor = qMult(nor, inv_denom);
+	nor0 = normalize(cross(v1.xyz,v2.xyz));
+	vec4 nor = qMult(denom, vec4(nor0, 0.));
+	nor = qMult(nor, inv_denom);
 
-	//vecNormal = MVP * vec4(nor.xyz, 1.0);
+	vecNormal = MVP * vec4(nor.xyz, 1.0);
 	vecPos = MVP * vec4(surf.xyz, 1.0);
 	gl_Position = vecPos;
-	//vUV = UV;
+	vUV = UV;
 };
 
 #shader fragment
@@ -155,7 +163,7 @@ void main() {
 	//float specLightWeight = pow(max(dot(halfVec, nNormal), 0.0), shininess);
 	vec3 lightWeight = ambColor + diffColor * diffLightWeight
 		+ specColor * specLightWeight;
-	//color = vec4(lightWeight * checker(vUv), 1.0);
+	color = vec4(lightWeight * checker(vUv), 1.0);
 	//color = vec4(vecPos.x, vecPos.y, vecPos.z, 1.0);
-	color = vec4(1.0, 1.0, 1.0, 1.0);
+	//color = vec4(1.0, 1.0, 1.0, 1.0);
 }

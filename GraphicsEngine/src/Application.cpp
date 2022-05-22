@@ -72,12 +72,6 @@ int main(void)
         //float screanAspectRatio = (GLfloat)1080.0f / (GLfloat)1080.0f;
         //camera::Camera camera(glm::ortho((GLfloat)-2.0f , (GLfloat)2.0f , (GLfloat)-2.0f, (GLfloat)2.0f, 0.1f, 150.0f), view);
 
-        /*Shader quaternionShader("res/shaders/QuaternionicBezier.shader");
-        Shader gizmoShader("res/shaders/BasicColor.shader");
-        Shader normalVisualization("res/shaders/NormalVisualization.shader");
-        Shader uvTest("res/shaders/UVTest.shader");
-        Shader dupin("res/shaders/dupin.shader");*/
-
         //scenes::QuaternionicBezierScene scene;
         scenes::DupinPatchScene scene;
 
