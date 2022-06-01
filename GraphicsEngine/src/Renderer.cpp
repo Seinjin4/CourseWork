@@ -34,7 +34,7 @@ void Renderer::DrawTriangles(const VertexArray& va, const IndexBuffer& ib, const
     Bind(va, ib, shader);
 
     GLCall(glDisable(GL_CULL_FACE));
-    //GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
+    GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 
     EnableDepthTest();
 

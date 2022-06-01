@@ -6,7 +6,7 @@ namespace scenes
     QuaternionicBezierScene::QuaternionicBezierScene() :
         quaternionShader("res/shaders/QuaternionicBezier.shader"),
         normalVisualization("res/shaders/NormalVisualization.shader"),
-        line(90),
+        line(1000),
         u_q(0.0f, 1.0f, 0.0f, 0.0f),
         u_Pq0(1.0f, 0.0f, 0.0f, 0.0f),
         u_Pq1(-1.0f, 0.0f, 0.0f, 0.0f)

@@ -13,7 +13,7 @@ namespace scenes {
         gizmoShader.Bind();
         glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
         glm::mat4 mvp = camera.GetProjectionView() * model;
-        gizmoShader.SetUnifromMat4f("u_MVP", mvp);
+        gizmoShader.SetUnifromMat4f("MVP", mvp);
         renderer.DrawLines(gizmo.GetVertexArray(), gizmo.GetIndexBuffer(), gizmoShader, 1.0f);
     }
 }

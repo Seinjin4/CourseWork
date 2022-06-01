@@ -1,10 +1,6 @@
 #include "BezierIntervalGeometry.h"
 
 namespace geometry {
-	float intervalVertexBufferData[100] = { 0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
-
-	unsigned int intervalIndexBufferData[100] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-
 	VertexBufferLayout BezierIntervalGeometry::GenerateLayout()
 	{
 		vbLayout.Push<float>(1);
@@ -16,7 +12,7 @@ namespace geometry {
 	{
 		for (int i = 0; i < size; i++)
 		{
-			intervalVertexBufferData[i] = i * (1.0f / size);
+			intervalVertexBufferData->push_back(i * (1.0f / size));
 		}
 	}
 
@@ -24,16 +20,25 @@ namespace geometry {
 	{
 		for (int i = 0; i < size; i++)
 		{
-			intervalIndexBufferData[i] = i;
+			intervalIndexBufferData->push_back(i);
 		}
 	}
 
-	BezierIntervalGeometry::BezierIntervalGeometry(const unsigned int size) {
+	BezierIntervalGeometry::BezierIntervalGeometry(const unsigned int size) :
+		intervalVertexBufferData(new std::vector<float>),
+		intervalIndexBufferData(new std::vector<unsigned int>)
+	{
 		GenerateVertexBufferData(size);
 		GenerateIndexBufferData(size);
 		GenerateLayout();
 
-		geometryData.CreateVertexArray(intervalVertexBufferData, size * sizeof(float), vbLayout);
-		geometryData.CreateIndexBuffer(intervalIndexBufferData, size);
+		geometryData.CreateVertexArray(intervalVertexBufferData->data(), intervalVertexBufferData->size() * sizeof(float), vbLayout);
+		geometryData.CreateIndexBuffer(intervalIndexBufferData->data(), intervalVertexBufferData->size());
+	}
+
+	BezierIntervalGeometry::~BezierIntervalGeometry()
+	{
+		delete intervalVertexBufferData;
+		delete intervalIndexBufferData;
 	}
 }

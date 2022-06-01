@@ -93,6 +93,9 @@
     <ClCompile Include="src\geometries\TubeGeometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\TubeTestScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -179,6 +182,9 @@
     <ClInclude Include="src\geometries\TubeGeometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\scenes\TubeTestScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\NormalVisualization.shader" />
@@ -186,5 +192,6 @@
     <None Include="res\shaders\UVTest.shader" />
     <None Include="res\shaders\QuaternionicBezier.shader" />
     <None Include="res\shaders\DupinPatch.shader" />
+    <None Include="res\shaders\ShadedColor.shader" />
   </ItemGroup>
 </Project>

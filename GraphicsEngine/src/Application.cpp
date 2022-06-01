@@ -8,13 +8,6 @@
 
 #include "Renderer.h"
 
-//#include "VertexBuffer.h"
-//#include "IndexBuffer.h"
-//#include "VertexArray.h"
-//#include "VertexBufferLayout.h"
-//#include "Texture.h"
-//#include "Shader.h"
-
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/quaternion.hpp"
@@ -25,6 +18,7 @@
 
 #include "scenes/QuaternionicBezierScene.h"
 #include "scenes/DupinPatchScene.h"
+#include <scenes/TubeTestScene.h>
 
 int main(void)
 {
@@ -60,20 +54,9 @@ int main(void)
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
 
-        /*geometry::BezierIntervalGeometry line(90);
-        geometry::GizmoGeometry gizmo;
-        geometry::SphereGeometry sphere;
-        geometry::CubeGeometry cube;
-        geometry::PlaneGeometry plane(2);*/
-
-        /*glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-
-        camera::PerspectiveCamera camera(glm::radians(45.0f), (GLfloat)1080.0f / (GLfloat)1080.0f, 0.1f, 150.0f, view);*/
-        //float screanAspectRatio = (GLfloat)1080.0f / (GLfloat)1080.0f;
-        //camera::Camera camera(glm::ortho((GLfloat)-2.0f , (GLfloat)2.0f , (GLfloat)-2.0f, (GLfloat)2.0f, 0.1f, 150.0f), view);
-
         //scenes::QuaternionicBezierScene scene;
         scenes::DupinPatchScene scene;
+        //scenes::TubeTestScene scene;
 
         Renderer renderer;
 
@@ -83,7 +66,7 @@ int main(void)
         ImGui::StyleColorsDark();
 
         float cameraPosW = 0.25f;
-        float cameraHeight = 0.0f;
+        float cameraHeight = 2.5f;
         float cameraDist = 5.0f;
 
         while (!glfwWindowShouldClose(window))

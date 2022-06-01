@@ -13,17 +13,21 @@ namespace geometry
 	class TubeGeometry
 	{
 	private:
+		std::vector<float>* tubeVertexBufferData;
+		std::vector<unsigned int>* tubeIndexBufferData;
+
 		GeometryData geometryData;
 		VertexBufferLayout vbLayout;
 
 		VertexBufferLayout GenerateLayout();
 
-		void GenerateVertexBufferData(int segments);
+		void GenerateVertexBufferData(const std::vector<glm::vec3>& path, int segments, float radius, bool loop);
 
-		void GenerateIndexBufferData(std::vector<glm::vec3> path, int segments, bool loop);
+		void GenerateIndexBufferData(int pathPartCount, int segments, bool loop);
 
 	public:
-		TubeGeometry(std::vector<glm::vec3> path, int segments, bool loop = false);
+		TubeGeometry(const std::vector<glm::vec3>& path, int segments, float radius, bool loop = false);
+		~TubeGeometry();
 
 		const VertexArray& GetVertexArray() { return geometryData.GetVertexArray(); };
 		const IndexBuffer& GetIndexBuffer() { return geometryData.GetIndexBuffer(); };

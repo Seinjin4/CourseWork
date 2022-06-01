@@ -8,6 +8,9 @@ namespace geometry
 	class BezierIntervalGeometry
 	{
 	private:
+		std::vector<float> *intervalVertexBufferData;
+		std::vector<unsigned int> *intervalIndexBufferData;
+
 		GeometryData geometryData;
 		VertexBufferLayout vbLayout;
 
@@ -20,6 +23,7 @@ namespace geometry
 
 	public:
 		BezierIntervalGeometry(const unsigned int size);
+		~BezierIntervalGeometry();
 
 		const VertexArray& GetVertexArray() { return geometryData.GetVertexArray(); };
 		const IndexBuffer& GetIndexBuffer() { return geometryData.GetIndexBuffer(); };

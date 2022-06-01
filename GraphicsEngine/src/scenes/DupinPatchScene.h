@@ -1,6 +1,8 @@
 #pragma once
 #include "IScene.h"
 #include <geometries/PlaneGeometry.h>
+#include <geometries/SphereGeometry.h>
+#include <geometries/TubeGeometry.h>
 
 namespace scenes
 {
@@ -14,9 +16,15 @@ namespace scenes
 		float angle;
 
 		geometry::PlaneGeometry plane;
+		geometry::TubeGeometry tube;
+		geometry::SphereGeometry sphere;
 
 		Shader uvTestShader;
 		Shader dupinPatchShader;
+		Shader shadedColor;
+
+		std::vector<glm::vec3> generateCircularPoints(unsigned int pointCount);
+
 	public:
 		DupinPatchScene();
 
