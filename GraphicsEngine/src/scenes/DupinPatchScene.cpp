@@ -26,12 +26,14 @@ namespace scenes
         shadedColor("res/shaders/ShadedColor.shader"),
         tube(generateCircularPoints(50), 10, 0.02f, true),
         plane(30),
+        sphere(1),
         p1Slider(0.0f),
         p2Slider(0.25f),
         p3Slider(0.75f),
         p4Slider(0.5f),
         size(1),
-        angle(1.0f)
+        angle(1.0f),
+        wireframeToggle(false)
     {
     }
 
@@ -41,10 +43,12 @@ namespace scenes
         view = newView;
 
         glm::vec3 viewPos = newView[3];
-        glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 5.0f);
+        glm::vec3 lightPos = glm::vec3(0.0f, 3.0f, 8.0f);
         glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
         
         glm::vec3 pointBallSize = glm::vec3(0.05f, 0.05f, 0.05f);
+        glm::vec3 pointBallColor = glm::vec3(0.45f, 0.45f, 0.45f);
+
 
         glm::vec3 p1(
             glm::cos(glm::radians(360.0f) * p1Slider),
@@ -72,6 +76,8 @@ namespace scenes
 
         RenderGizmo(renderer, newView);
 
+        renderer.ToggleWireFrame(wireframeToggle);
+
         {
             dupinPatchShader.Bind();
             glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
@@ -81,10 +87,15 @@ namespace scenes
             dupinPatchShader.SetUnifromVec3f("p2", p2);
             dupinPatchShader.SetUnifromVec3f("p3", p3);
             dupinPatchShader.SetUnifromVec3f("p4", p4);
-            dupinPatchShader.SetUnifrom1i("size", size);
             dupinPatchShader.SetUnifrom1f("angle", angle);
+            dupinPatchShader.SetUnifromVec3f("lightPos", lightPos);
+            dupinPatchShader.SetUnifromVec3f("viewPos", viewPos);
+            dupinPatchShader.SetUnifromVec3f("lightColor", lightColor);
+            dupinPatchShader.SetUnifromVec3f("objectColor", glm::vec3(1.0f, 0.3f, 1.0f));
             renderer.DrawTriangles(plane.GetVertexArray(), plane.GetIndexBuffer(), dupinPatchShader);
         }
+
+        renderer.ToggleWireFrame(false);
 
         {
             shadedColor.Bind();
@@ -98,53 +109,53 @@ namespace scenes
             renderer.DrawTriangles(tube.GetVertexArray(), tube.GetIndexBuffer(), shadedColor);
         }
 
-        //{
-        //    shadedColor.Bind();
-        //    glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), p1), pointBallSize);
-        //    glm::mat4 mvp = camera.GetProjectionView() * model;
-        //    shadedColor.SetUnifromMat4f("MVP", mvp);
-        //    shadedColor.SetUnifromVec3f("lightPos", lightPos);
-        //    shadedColor.SetUnifromVec3f("viewPos", viewPos);
-        //    shadedColor.SetUnifromVec3f("lightColor", lightColor);
-        //    shadedColor.SetUnifromVec3f("objectColor", glm::vec3(1.0f, 0.0f, 0.0f));
-        //    renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), shadedColor);
-        //}
+        {
+            shadedColor.Bind();
+            glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), p1), pointBallSize);
+            glm::mat4 mvp = camera.GetProjectionView() * model;
+            shadedColor.SetUnifromMat4f("MVP", mvp);
+            shadedColor.SetUnifromVec3f("lightPos", lightPos);
+            shadedColor.SetUnifromVec3f("viewPos", viewPos);
+            shadedColor.SetUnifromVec3f("lightColor", lightColor);
+            shadedColor.SetUnifromVec3f("objectColor", pointBallColor);
+            renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), shadedColor);
+        }
 
-        //{
-        //    shadedColor.Bind();
-        //    glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), p2), pointBallSize);
-        //    glm::mat4 mvp = camera.GetProjectionView() * model;
-        //    shadedColor.SetUnifromMat4f("MVP", mvp);
-        //    shadedColor.SetUnifromVec3f("lightPos", lightPos);
-        //    shadedColor.SetUnifromVec3f("viewPos", viewPos);
-        //    shadedColor.SetUnifromVec3f("lightColor", lightColor);
-        //    shadedColor.SetUnifromVec3f("objectColor", glm::vec3(1.0f, 0.0f, 0.0f));
-        //    renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), shadedColor);
-        //}
+        {
+            shadedColor.Bind();
+            glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), p2), pointBallSize);
+            glm::mat4 mvp = camera.GetProjectionView() * model;
+            shadedColor.SetUnifromMat4f("MVP", mvp);
+            shadedColor.SetUnifromVec3f("lightPos", lightPos);
+            shadedColor.SetUnifromVec3f("viewPos", viewPos);
+            shadedColor.SetUnifromVec3f("lightColor", lightColor);
+            shadedColor.SetUnifromVec3f("objectColor", pointBallColor);
+            renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), shadedColor);
+        }
 
-        //{
-        //    shadedColor.Bind();
-        //    glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), p3), pointBallSize);
-        //    glm::mat4 mvp = camera.GetProjectionView() * model;
-        //    shadedColor.SetUnifromMat4f("MVP", mvp);
-        //    shadedColor.SetUnifromVec3f("lightPos", lightPos);
-        //    shadedColor.SetUnifromVec3f("viewPos", viewPos);
-        //    shadedColor.SetUnifromVec3f("lightColor", lightColor);
-        //    shadedColor.SetUnifromVec3f("objectColor", glm::vec3(1.0f, 0.0f, 0.0f));
-        //    renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), shadedColor);
-        //}
+        {
+            shadedColor.Bind();
+            glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), p3), pointBallSize);
+            glm::mat4 mvp = camera.GetProjectionView() * model;
+            shadedColor.SetUnifromMat4f("MVP", mvp);
+            shadedColor.SetUnifromVec3f("lightPos", lightPos);
+            shadedColor.SetUnifromVec3f("viewPos", viewPos);
+            shadedColor.SetUnifromVec3f("lightColor", lightColor);
+            shadedColor.SetUnifromVec3f("objectColor", pointBallColor);
+            renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), shadedColor);
+        }
 
-        //{
-        //    shadedColor.Bind();
-        //    glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), p4), pointBallSize);
-        //    glm::mat4 mvp = camera.GetProjectionView() * model;
-        //    shadedColor.SetUnifromMat4f("MVP", mvp);
-        //    shadedColor.SetUnifromVec3f("lightPos", lightPos);
-        //    shadedColor.SetUnifromVec3f("viewPos", viewPos);
-        //    shadedColor.SetUnifromVec3f("lightColor", lightColor);
-        //    shadedColor.SetUnifromVec3f("objectColor", glm::vec3(1.0f, 0.0f, 0.0f));
-        //    renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), shadedColor);
-        //}
+        {
+            shadedColor.Bind();
+            glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), p4), pointBallSize);
+            glm::mat4 mvp = camera.GetProjectionView() * model;
+            shadedColor.SetUnifromMat4f("MVP", mvp);
+            shadedColor.SetUnifromVec3f("lightPos", lightPos);
+            shadedColor.SetUnifromVec3f("viewPos", viewPos);
+            shadedColor.SetUnifromVec3f("lightColor", lightColor);
+            shadedColor.SetUnifromVec3f("objectColor", pointBallColor);
+            renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), shadedColor);
+        }
 
         ImGui::Begin("Dupin Patch Controls");
         ImGui::SliderFloat("Point p1", &p1Slider, 0.0f, 1.0f);
@@ -152,7 +163,8 @@ namespace scenes
         ImGui::SliderFloat("Point p3", &p3Slider, 0.0f, 1.0f);
         ImGui::SliderFloat("Point p4", &p4Slider, 0.0f, 1.0f);
         ImGui::SliderInt("Size", &size, -10, 10);
-        ImGui::SliderFloat("AngleA", &angle, -5.0f, 5.0f);
+        ImGui::SliderFloat("Angle", &angle, -5.0f, 5.0f);
+        ImGui::Checkbox("Wireframe", &wireframeToggle);
         ImGui::End();
     }
 }

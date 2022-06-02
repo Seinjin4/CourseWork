@@ -14,6 +14,7 @@ namespace scenes
 		float p4Slider;
 		int size;
 		float angle;
+		bool wireframeToggle;
 
 		geometry::PlaneGeometry plane;
 		geometry::TubeGeometry tube;
