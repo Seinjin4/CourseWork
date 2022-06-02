@@ -19,6 +19,7 @@
 #include "scenes/QuaternionicBezierScene.h"
 #include "scenes/DupinPatchScene.h"
 #include <scenes/TubeTestScene.h>
+#include <scenes/SphereTestScene.h>
 
 int main(void)
 {
@@ -56,9 +57,11 @@ int main(void)
 
         //scenes::QuaternionicBezierScene scene;
         scenes::DupinPatchScene scene;
+        //scenes::SphereTestScene scene;
         //scenes::TubeTestScene scene;
 
         Renderer renderer;
+        renderer.SetClearColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
         ImGui::CreateContext();
         ImGui_ImplGlfw_InitForOpenGL(window, true);

@@ -31,29 +31,29 @@ namespace scenes
             renderer.DrawLineStrip(line.GetVertexArray(), line.GetIndexBuffer(), quaternionShader, 10.0f);
         }
 
-        {
-            normalVisualization.Bind();
-            glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(u_Pq0.x, u_Pq0.y, u_Pq0.z)), glm::vec3(0.02f, 0.02f, 0.02f));
-            glm::mat4 mvp = camera.GetProjectionView() * model;
-            normalVisualization.SetUnifromMat4f("u_MVP", mvp);
-            renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), normalVisualization);
-        }
+        //{
+        //    normalVisualization.Bind();
+        //    glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(u_Pq0.x, u_Pq0.y, u_Pq0.z)), glm::vec3(0.02f, 0.02f, 0.02f));
+        //    glm::mat4 mvp = camera.GetProjectionView() * model;
+        //    normalVisualization.SetUnifromMat4f("u_MVP", mvp);
+        //    renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), normalVisualization);
+        //}
 
-        {
-            normalVisualization.Bind();
-            glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(u_Pq1.x, u_Pq1.y, u_Pq1.z)), glm::vec3(0.02f, 0.02f, 0.02f));
-            glm::mat4 mvp = camera.GetProjectionView() * model;
-            normalVisualization.SetUnifromMat4f("u_MVP", mvp);
-            renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), normalVisualization);
-        }
+        //{
+        //    normalVisualization.Bind();
+        //    glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(u_Pq1.x, u_Pq1.y, u_Pq1.z)), glm::vec3(0.02f, 0.02f, 0.02f));
+        //    glm::mat4 mvp = camera.GetProjectionView() * model;
+        //    normalVisualization.SetUnifromMat4f("u_MVP", mvp);
+        //    renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), normalVisualization);
+        //}
 
-        {
-            normalVisualization.Bind();
-            glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(u_q.x, u_q.y, u_q.z)), glm::vec3(0.02f, 0.02f, 0.02f));
-            glm::mat4 mvp = camera.GetProjectionView() * model;
-            normalVisualization.SetUnifromMat4f("u_MVP", mvp);
-            renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), normalVisualization);
-        }
+        //{
+        //    normalVisualization.Bind();
+        //    glm::mat4 model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(u_q.x, u_q.y, u_q.z)), glm::vec3(0.02f, 0.02f, 0.02f));
+        //    glm::mat4 mvp = camera.GetProjectionView() * model;
+        //    normalVisualization.SetUnifromMat4f("u_MVP", mvp);
+        //    renderer.DrawTriangles(sphere.GetVertexArray(), sphere.GetIndexBuffer(), normalVisualization);
+        //}
 
         ImGui::Begin("Quaternionic Bezier Controls");
         ImGui::SliderFloat3("P0", &u_Pq0.x, -2.0f, 2.0f);

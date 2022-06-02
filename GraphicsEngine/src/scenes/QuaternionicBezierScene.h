@@ -13,7 +13,7 @@ namespace scenes
 		glm::vec4 u_Pq1;
 
 		geometry::BezierIntervalGeometry line;
-		geometry::SphereGeometry sphere;
+		//geometry::SphereGeometry sphere;
 
 		Shader quaternionShader;
 		Shader normalVisualization;
