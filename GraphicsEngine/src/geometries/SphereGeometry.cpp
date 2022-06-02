@@ -2,29 +2,6 @@
 
 namespace geometry
 {
-	float sphereVertexBufferData[100] = {
-		 0.0f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-
-		 1.0f,  0.0f,  1.0f,  1.0f,  0.0f,  1.0f,
-		 1.0f,  0.0f, -1.0f,  1.0f,  0.0f, -1.0f,
-		-1.0f,  0.0f, -1.0f, -1.0f,  0.0f, -1.0f,
-		-1.0f,  0.0f,  1.0f, -1.0f,  0.0f,  1.0f,
-
-		 0.0f, -1.0f,  0.0f,  0.0f, -1.0f,  0.0f,
-	};
-
-	unsigned int sphereIndexBufferData[100] = {
-		0, 4, 1,
-		0, 1, 2,
-		0, 2, 3,
-		0, 3, 4,
-
-		5, 1, 4,
-		5, 2, 1,
-		5, 3, 2,
-		5, 4, 3,
-	};
-
 	VertexBufferLayout SphereGeometry::GenerateLayout()
 	{
 		vbLayout.Push<float>(3);
@@ -33,11 +10,91 @@ namespace geometry
 		return vbLayout;
 	}
 
-	SphereGeometry::SphereGeometry() {
+	void SphereGeometry::GenerateVertexBufferData(float ratio, unsigned int verticalSegments, unsigned int horizontalSegments)
+	{
+		sphereVertexBufferData->push_back(0.0f);
+		sphereVertexBufferData->push_back(ratio);
+		sphereVertexBufferData->push_back(0.0f);
+
+		sphereVertexBufferData->push_back(0.0f);
+		sphereVertexBufferData->push_back(1.0f);
+		sphereVertexBufferData->push_back(0.0f);
+
+		for (size_t i = 0; i < verticalSegments; i++)
+		{
+			//float newYCoordinate = ratio - ((float)(i + 1) / (verticalSegments + 1)) * 2 * ratio;
+			float newYCoordinate = ratio * glm::cos(glm::pi<float>() * (float)(i + 1) / verticalSegments);
+			float segmentRatio = ratio * glm::sin(glm::pi<float>() * (float)(i + 1) / verticalSegments);
+
+			for (size_t j = 0; j < horizontalSegments; j++)
+			{
+				glm::vec3 newPoint( 
+					glm::sin(glm::pi<float>() * 2 * j / horizontalSegments) * segmentRatio,
+					newYCoordinate,
+					glm::cos(glm::pi<float>() * 2 * j / horizontalSegments) * segmentRatio
+				);
+
+				sphereVertexBufferData->push_back(newPoint.x);
+				sphereVertexBufferData->push_back(newPoint.y);
+				sphereVertexBufferData->push_back(newPoint.z);
+
+				glm::vec3 newPointNormal = glm::normalize(newPoint);
+
+				sphereVertexBufferData->push_back(newPointNormal.x);
+				sphereVertexBufferData->push_back(newPointNormal.y);
+				sphereVertexBufferData->push_back(newPointNormal.z);
+			}
+		}
+
+		sphereVertexBufferData->push_back(0.0f);
+		sphereVertexBufferData->push_back(-ratio);
+		sphereVertexBufferData->push_back(0.0f);
+
+		sphereVertexBufferData->push_back(0.0f);
+		sphereVertexBufferData->push_back(-1.0f);
+		sphereVertexBufferData->push_back(0.0f);
+	}
+
+	void SphereGeometry::GenerateIndexBufferData(float ratio, unsigned int verticalSegments, unsigned int horizontalSegments)
+	{
+		for (size_t x = 0; x < horizontalSegments; x++)
+		{
+			sphereIndexBufferData->push_back(0);
+			sphereIndexBufferData->push_back(1 + x);
+			sphereIndexBufferData->push_back(1 + (x + 1) % horizontalSegments);
+		}
+
+		for (size_t y = 0; y < verticalSegments - 1; y++)
+		{
+			for (size_t x = 0; x < horizontalSegments; x++)
+			{
+				sphereIndexBufferData->push_back(1 + y * horizontalSegments + x);
+				sphereIndexBufferData->push_back(1 + (y + 1) * horizontalSegments + x);
+				sphereIndexBufferData->push_back(1 + y * horizontalSegments + (x + 1) % horizontalSegments);
+
+				sphereIndexBufferData->push_back(1 + y * horizontalSegments + (x + 1) % horizontalSegments);
+				sphereIndexBufferData->push_back(1 + (y + 1) * horizontalSegments + x);
+				sphereIndexBufferData->push_back(1 + (y + 1) * horizontalSegments + (x + 1) % horizontalSegments);
+			}
+		}
+
+		for (size_t x = 0; x < horizontalSegments; x++)
+		{
+			sphereIndexBufferData->push_back(1 + (verticalSegments - 1) * horizontalSegments + x);
+			sphereIndexBufferData->push_back(1 + verticalSegments * horizontalSegments);
+			sphereIndexBufferData->push_back(1 + (verticalSegments - 1) * horizontalSegments + (x + 1) % horizontalSegments);
+		}
+	}
+
+	SphereGeometry::SphereGeometry(float ratio, unsigned int verticalSegments, unsigned int horizontalSegments) :
+		sphereVertexBufferData(new std::vector<float>),
+		sphereIndexBufferData(new std::vector<unsigned int>)
+	{
+		GenerateVertexBufferData(ratio, verticalSegments, horizontalSegments);
+		GenerateIndexBufferData(ratio, verticalSegments, horizontalSegments);
 		GenerateLayout();
 
-		geometryData.CreateVertexArray(sphereVertexBufferData, 36 * sizeof(float), vbLayout);
-		geometryData.CreateIndexBuffer(sphereIndexBufferData, 24);
-
+		geometryData.CreateVertexArray(sphereVertexBufferData->data(), sphereVertexBufferData->size() * sizeof(float), vbLayout);
+		geometryData.CreateIndexBuffer(sphereIndexBufferData->data(), sphereIndexBufferData->size());
 	}
 }
