@@ -132,38 +132,31 @@ in vec2 vUv;
 in vec4 vecPos;
 in vec4 vecNormal;
 
-uniform int size;
+uniform vec3 lightPos;
+uniform vec3 viewPos;
+uniform vec3 lightColor;
+uniform vec3 objectColor;
 
 layout(location = 0) out vec4 color;
 
-vec3 checker(vec2 tex) {
-	float Size = float(size);
-	float res = mod(floor(Size * tex.x) + floor(Size * tex.y), 2.0);
-	if (res < 1.0) {
-		return vec3(0.0, 0.9, 0.9);  // turquiose
-	}
-	else {
-		return vec3(0.9, 0.0, 0.9);  // magenta
-	}
-}
-
 void main() {
-	vec3 cyanColor = vec3(0.9, 0.9, 0.9);
-	vec3 nNormal = normalize(vecNormal.xyz);
-	vec3 ambColor = vec3(0.2, 0.2, 0.2);
-	vec3 diffColor = vec3(0.8, 0.8, 0.8);
-	vec3 specColor = vec3(1.0, 0.9, 0.9);
-	float shininess = 32.0;
-	vec3 lightDir = normalize(vec3(-0.4, -0.2, -1.0));
-	float diffLightWeight = abs(dot(nNormal, -lightDir));
-	vec3 eyeDir = normalize(-vecPos.xyz);
-	vec3 reflDir = reflect(lightDir, nNormal);
-	//vec3 halfVec = normalize(-lightDir + eyeDir);
-	float specLightWeight = pow(max(dot(reflDir, eyeDir), 0.0), shininess);
-	//float specLightWeight = pow(max(dot(halfVec, nNormal), 0.0), shininess);
-	vec3 lightWeight = ambColor + diffColor * diffLightWeight
-		+ specColor * specLightWeight;
-	color = vec4(lightWeight * checker(vUv), 1.0);
-	//color = vec4(vecPos.x, vecPos.y, vecPos.z, 1.0);
-	//color = vec4(1.0, 1.0, 1.0, 1.0);
+	// ambient
+	float ambientStrength = 0.7;
+	vec3 ambient = ambientStrength * lightColor;
+
+	// diffuse 
+	vec3 norm = normalize(vecNormal.xyz);
+	vec3 lightDir = normalize(lightPos - vecPos.xyz);
+	float diff = max(dot(norm, lightDir), 0.0);
+	vec3 diffuse = diff * lightColor;
+
+	// specular
+	float specularStrength = 0.5;
+	vec3 viewDir = normalize(viewPos - vecPos.xyz);
+	vec3 reflectDir = reflect(-lightDir, norm);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+	vec3 specular = specularStrength * spec * lightColor;
+
+	vec3 result = (ambient + diffuse + specular) * objectColor;
+	color = vec4(result, 1.0);
 }
