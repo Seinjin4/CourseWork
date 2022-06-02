@@ -23,6 +23,9 @@ public:
     void DrawTriangles(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
     void DrawLineStrip(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, const float lineWidth) const;
     void DrawLines(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, const float lineWidth) const;
+
+    void ToggleWireFrame(bool state) const;
+    void SetClearColor(glm::vec4 color) const;
 private:
     void EnableDepthTest() const;
 };

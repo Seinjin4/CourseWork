@@ -34,7 +34,6 @@ void Renderer::DrawTriangles(const VertexArray& va, const IndexBuffer& ib, const
     Bind(va, ib, shader);
 
     GLCall(glDisable(GL_CULL_FACE));
-    GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 
     EnableDepthTest();
 
@@ -65,6 +64,23 @@ void Renderer::DrawLines(const VertexArray& va, const IndexBuffer& ib, const Sha
     glLineWidth((GLfloat)lineWidth);
 
     GLCall(glDrawElements(GL_LINES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::ToggleWireFrame(bool state) const
+{
+    if (state == true)
+    {
+        GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
+    }
+    else
+    {
+        GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
+    }
+}
+
+void Renderer::SetClearColor(glm::vec4 color) const
+{
+    GLCall(glClearColor(color.x, color.y, color.z, color.w));
 }
 
 void Renderer::EnableDepthTest() const
