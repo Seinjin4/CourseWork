@@ -155,6 +155,7 @@
     <ClCompile Include="src\geometries\PlaneGeometry.cpp" />
     <ClCompile Include="src\geometries\SphereGeometry.cpp" />
     <ClCompile Include="src\geometries\TubeGeometry.cpp" />
+    <ClCompile Include="src\scenes\CyclidicCubeScene.cpp" />
     <ClCompile Include="src\scenes\DupinPatchScene.cpp" />
     <ClCompile Include="src\scenes\IScene.cpp" />
     <ClCompile Include="src\scenes\QuaternionicBezierScene.cpp" />
@@ -178,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\BasicColor.shader" />
+    <None Include="res\shaders\CyclideCubeSide.shader" />
     <None Include="res\shaders\DupinPatch.shader" />
     <None Include="res\shaders\NormalVisualization.shader" />
     <None Include="res\shaders\QuaternionicBezier.shader" />
@@ -194,6 +196,7 @@
     <ClInclude Include="src\geometries\PlaneGeometry.h" />
     <ClInclude Include="src\geometries\SphereGeometry.h" />
     <ClInclude Include="src\geometries\TubeGeometry.h" />
+    <ClInclude Include="src\scenes\CyclidicCubeScene.h" />
     <ClInclude Include="src\scenes\DupinPatchScene.h" />
     <ClInclude Include="src\scenes\IScene.h" />
     <ClInclude Include="src\scenes\QuaternionicBezierScene.h" />

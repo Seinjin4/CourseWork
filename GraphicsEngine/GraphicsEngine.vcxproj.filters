@@ -99,6 +99,9 @@
     <ClCompile Include="src\scenes\SphereTestScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\CyclidicCubeScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -191,6 +194,9 @@
     <ClInclude Include="src\scenes\SphereTestScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\scenes\CyclidicCubeScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\NormalVisualization.shader" />
@@ -199,5 +205,6 @@
     <None Include="res\shaders\QuaternionicBezier.shader" />
     <None Include="res\shaders\DupinPatch.shader" />
     <None Include="res\shaders\ShadedColor.shader" />
+    <None Include="res\shaders\CyclideCubeSide.shader" />
   </ItemGroup>
 </Project>

@@ -20,6 +20,7 @@
 #include "scenes/DupinPatchScene.h"
 #include <scenes/TubeTestScene.h>
 #include <scenes/SphereTestScene.h>
+#include <scenes/CyclidicCubeScene.h>
 
 int main(void)
 {
@@ -56,7 +57,8 @@ int main(void)
         GLCall(glEnable(GL_BLEND));
 
         //scenes::QuaternionicBezierScene scene;
-        scenes::DupinPatchScene scene;
+        //scenes::DupinPatchScene scene;
+        scenes::CyclidicCubeScene scene;
         //scenes::SphereTestScene scene;
         //scenes::TubeTestScene scene;
 
