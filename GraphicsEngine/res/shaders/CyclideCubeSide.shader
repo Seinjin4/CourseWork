@@ -132,7 +132,7 @@ layout(location = 0) out vec4 color;
 
 void main() {
 	// ambient
-	float ambientStrength = 0.7;
+	float ambientStrength = 0.4;
 	vec3 ambient = ambientStrength * lightColor;
 
 	// diffuse 
