@@ -8,6 +8,9 @@ namespace geometry
 	class PlaneGeometry
 	{
 	private:
+		std::vector<float>* planeVertexBufferData;
+		std::vector<unsigned int>* planeIndexBufferData;
+
 		GeometryData geometryData;
 		VertexBufferLayout vbLayout;
 
@@ -19,6 +22,7 @@ namespace geometry
 
 	public:
 		PlaneGeometry(const unsigned int segments);
+		~PlaneGeometry();
 
 		const VertexArray& GetVertexArray() { return geometryData.GetVertexArray(); };
 		const IndexBuffer& GetIndexBuffer() { return geometryData.GetIndexBuffer(); };
