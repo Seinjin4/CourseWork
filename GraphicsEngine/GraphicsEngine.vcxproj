@@ -173,6 +173,7 @@
     <ClCompile Include="src\vendor\imgui\imgui_draw.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_tables.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\vendor\MathCalculations.cpp" />
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="src\vendor\imgui\imstb_rectpack.h" />
     <ClInclude Include="src\vendor\imgui\imstb_textedit.h" />
     <ClInclude Include="src\vendor\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\vendor\MathCalculations.h" />
     <ClInclude Include="src\vendor\stb_image\stb_image.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\VertexBuffer.h" />
