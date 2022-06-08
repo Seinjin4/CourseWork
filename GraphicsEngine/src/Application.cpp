@@ -84,10 +84,10 @@ int main(void)
 
             glm::mat4 view = glm::lookAt(
                 glm::vec3(
-                    glm::cos(glm::radians(360.0f) * cameraPosW) * cameraDist,
+                    0.5f + glm::cos(glm::radians(360.0f) * cameraPosW) * cameraDist,
                     cameraHeight,
-                    glm::sin(glm::radians(360.0f) * cameraPosW) * cameraDist),
-                glm::vec3(0.0f, 0.0f, 0.0f),
+                    0.5f + glm::sin(glm::radians(360.0f) * cameraPosW) * cameraDist),
+                glm::vec3(0.5f, 0.0f, 0.5f),
                 glm::vec3(0.0f, 1.0f, 0.0f)
                 );
 
