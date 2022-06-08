@@ -97,4 +97,9 @@ namespace geometry
 		geometryData.CreateVertexArray(sphereVertexBufferData->data(), sphereVertexBufferData->size() * sizeof(float), vbLayout);
 		geometryData.CreateIndexBuffer(sphereIndexBufferData->data(), sphereIndexBufferData->size());
 	}
+	SphereGeometry::~SphereGeometry()
+	{
+		delete sphereVertexBufferData;
+		delete sphereIndexBufferData;
+	}
 }

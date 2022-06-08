@@ -27,6 +27,7 @@ namespace geometry
 
 	public:
 		SphereGeometry(float ratio, unsigned int verticalSegments = 10, unsigned int horizontalSegments = 10);
+		~SphereGeometry();
 
 		const VertexArray& GetVertexArray() { return geometryData.GetVertexArray(); };
 		const IndexBuffer& GetIndexBuffer() { return geometryData.GetIndexBuffer(); };
