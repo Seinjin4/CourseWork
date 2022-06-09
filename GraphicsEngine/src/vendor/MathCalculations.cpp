@@ -1,6 +1,7 @@
 #include "MathCalculations.h"
 #include "glm/glm.hpp"
 #include <vendor/glm/ext/matrix_transform.hpp>
+#include <vector>
 
 namespace mathCalc
 {
@@ -148,5 +149,21 @@ namespace mathCalc
 		Plane plane = { circleData.direction, distance };
 
 		return plane;
+	}
+	std::vector<glm::vec3> GenerateCircularPoints(unsigned int pointCount)
+	{
+		std::vector<glm::vec3> points;
+
+		for (size_t i = 0; i < pointCount; i++)
+		{
+			points.push_back(
+				glm::vec3(
+					glm::cos(glm::pi<float>() * 2 * i / pointCount),
+					0,
+					glm::sin(glm::pi<float>() * 2 * i / pointCount)
+				));
+		}
+
+		return points;
 	}
 }

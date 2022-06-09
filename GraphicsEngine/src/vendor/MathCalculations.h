@@ -1,5 +1,6 @@
 #pragma once
 #include "glm/glm.hpp"
+#include <vector>
 
 namespace mathCalc
 {
@@ -20,4 +21,5 @@ namespace mathCalc
 	glm::vec3 CalculatePointInCircle(CircleData circleData, float angle);
 	glm::vec3 IntersectionPointFrom3Planes(Plane plane1, Plane plane2, Plane plane3);
 	Plane GetPlaneFromCircleData(CircleData circleData);
+	std::vector<glm::vec3> GenerateCircularPoints(unsigned int pointCount);
 }
