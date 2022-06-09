@@ -223,15 +223,59 @@ void scenes::CyclidicCubeScene::RenderPoints(const Renderer& renderer)
     }
 }
 
+void scenes::CyclidicCubeScene::RenderCircles(const Renderer& renderer)
+{
+    glm::mat4 rotationMatrix;
+    glm::mat4 translationMatrix;
+    glm::mat4 scaleMatrix;
+    glm::vec3 rotationAxis;
+    float rotationAngle;
+    mathCalc::CircleData circles[] = { sideA , sideB, sideC, sideD, sideE, sideF };
+
+    for(int i = 0; i < 6; i++)
+    {
+        shadedColor.Bind();
+        rotationAxis = glm::cross(circles[i].direction, glm::vec3(0.0f, 1.0f, 0.0f));
+        
+        if (glm::length(rotationAxis) == 0)
+        {
+            rotationAxis = glm::vec3(1.0f, 0.0f, 0.0f);
+            rotationAngle = 0.0f;
+        }
+        else
+        {
+            rotationAxis = glm::normalize(rotationAxis);
+            rotationAngle = glm::acos(glm::dot(circles[i].direction, glm::vec3(0.0f, 1.0f, 0.0f)));
+        }
+
+        translationMatrix = glm::translate(glm::mat4(1.0f), circles[i].centerPosition);;
+
+        rotationMatrix = glm::rotate(glm::mat4(1.0f), -rotationAngle, rotationAxis);
+
+        float circleSizeDiff = circles[i].radius / 1.0f;
+
+        scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(circleSizeDiff));
+
+        glm::mat4 model = translationMatrix * rotationMatrix * scaleMatrix;
+        glm::mat4 mvp = camera.GetProjectionView() * model;
+        shadedColor.SetUnifromMat4f("MVP", mvp);
+        shadedColor.SetUnifromVec3f("lightPos", glm::vec3(0.0f, 5.0f, 0.0f));
+        shadedColor.SetUnifromVec3f("viewPos", view[3]);
+        shadedColor.SetUnifromVec3f("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+        shadedColor.SetUnifromVec3f("objectColor", glm::vec3(0.55f, 0.55f, 0.55f));
+        renderer.DrawTriangles(tube.GetVertexArray(), tube.GetIndexBuffer(), shadedColor);
+    }
+}
+
 void scenes::CyclidicCubeScene::CalculatePoints()
 {
-    p6 = mathCalc::CalculatePointInCircle(sideA, (p6Slider * 0.99 + 0.25) * glm::pi<float>());
-    p3 = mathCalc::CalculatePointInCircle(sideB, (p3Slider * 0.99 - 0.249) * glm::pi<float>());
-    p5 = mathCalc::CalculatePointInCircle(sideC, (p5Slider * 0.99 - 0.75) * glm::pi<float>());
+    p6 = mathCalc::CalculatePointInCircle(sideA, (p6Slider * 0.99f + 0.25f) * glm::pi<float>());
+    p3 = mathCalc::CalculatePointInCircle(sideB, (p3Slider * 0.99f - 0.249f) * glm::pi<float>());
+    p5 = mathCalc::CalculatePointInCircle(sideC, (p5Slider * 0.99f - 0.75f) * glm::pi<float>());
 
-    mathCalc::CircleData sideF = mathCalc::GetCircleDataFrom3Points(p1, p3, p5);
-    mathCalc::CircleData sideE = mathCalc::GetCircleDataFrom3Points(p4, p5, p6);
-    mathCalc::CircleData sideD = mathCalc::GetCircleDataFrom3Points(p2, p3, p6);
+    sideF = mathCalc::GetCircleDataFrom3Points(p1, p3, p5);
+    sideE = mathCalc::GetCircleDataFrom3Points(p4, p6, p5);
+    sideD = mathCalc::GetCircleDataFrom3Points(p2, p6, p3);
 
     mathCalc::Plane planeF = mathCalc::GetPlaneFromCircleData(sideF);
     mathCalc::Plane planeE = mathCalc::GetPlaneFromCircleData(sideE);
@@ -247,6 +291,7 @@ void scenes::CyclidicCubeScene::CalculatePoints()
 scenes::CyclidicCubeScene::CyclidicCubeScene() :
     plain(30),
     sphere(1, 10, 10),
+    tube(mathCalc::GenerateCircularPoints(30), 10, 0.02f, true),
     cyclideCubeSideShader("res/shaders/CyclideCubeSide.shader"),
     shadedColor("res/shaders/ShadedColor.shader"),
     p3Slider(0.505f),
@@ -281,6 +326,11 @@ void scenes::CyclidicCubeScene::RenderScene(const Renderer& renderer, glm::mat4 
         RenderPoints(renderer);
     }
 
+    if (circleToggle)
+    {
+        RenderCircles(renderer);
+    }
+
     ImGui::Begin("Cyclidic Cube Controls");
     ImGui::SliderFloat("Point p3", &p3Slider, 0.0f, 1.0f);
     ImGui::SliderFloat("Point p5", &p5Slider, 0.0f, 1.0f);
@@ -288,5 +338,6 @@ void scenes::CyclidicCubeScene::RenderScene(const Renderer& renderer, glm::mat4 
     ImGui::Checkbox("Wireframe", &wireframeToggle);
     ImGui::Checkbox("Render points", &pointToggle);
     ImGui::Checkbox("Render cube", &cubeToggle);
+    ImGui::Checkbox("Render circles", &circleToggle);
     ImGui::End();
 }

@@ -15,6 +15,7 @@ namespace scenes
 		bool wireframeToggle = false;
 		bool pointToggle = false;
 		bool cubeToggle = true;
+		bool circleToggle = false;
 
 		glm::vec3 viewPos;
 		glm::vec3 lightPos = glm::vec3(0.0f, 10.0f, 16.0f);
@@ -33,9 +34,12 @@ namespace scenes
 		mathCalc::CircleData sideA;
 		mathCalc::CircleData sideB;
 		mathCalc::CircleData sideC;
+		mathCalc::CircleData sideD;
+		mathCalc::CircleData sideE;
+		mathCalc::CircleData sideF;
 
 		geometry::PlaneGeometry plain;
-		//geometry::TubeGeometry tube;
+		geometry::TubeGeometry tube;
 		geometry::SphereGeometry sphere;
 
 		Shader cyclideCubeSideShader;
@@ -43,6 +47,7 @@ namespace scenes
 
 		void RenderCube(const Renderer& renderer);
 		void RenderPoints(const Renderer& renderer);
+		void RenderCircles(const Renderer& renderer);
 		void CalculatePoints();
 
 	public:
