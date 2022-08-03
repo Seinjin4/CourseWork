@@ -105,6 +105,9 @@
     <ClCompile Include="src\vendor\MathCalculations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\PlaneTestScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -203,6 +206,9 @@
     <ClInclude Include="src\vendor\MathCalculations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\scenes\PlaneTestScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\NormalVisualization.shader" />
@@ -212,5 +218,6 @@
     <None Include="res\shaders\DupinPatch.shader" />
     <None Include="res\shaders\ShadedColor.shader" />
     <None Include="res\shaders\CyclideCubeSide.shader" />
+    <None Include="res\shaders\SingularityTexture.shader" />
   </ItemGroup>
 </Project>

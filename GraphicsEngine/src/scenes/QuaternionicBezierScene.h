@@ -12,13 +12,19 @@ namespace scenes
 		glm::vec4 u_Pq0;
 		glm::vec4 u_Pq1;
 
+		glm::vec3 viewPos;
+		glm::vec3 lightPos = glm::vec3(0.0f, 10.0f, 16.0f);
+		glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
 		geometry::BezierIntervalGeometry line;
-		//geometry::SphereGeometry sphere;
+		geometry::SphereGeometry sphere;
 
 		Shader quaternionShader;
-		Shader normalVisualization;
+		Shader shadedColor;
 	public:
 		QuaternionicBezierScene();
+
+		glm::vec3 sceneCenter = glm::vec3(0.0f, 1.0f, 0.0f);
 
 		void RenderScene(const Renderer& renderer, glm::mat4 newView);
 	};

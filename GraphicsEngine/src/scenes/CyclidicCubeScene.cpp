@@ -129,9 +129,9 @@ void scenes::CyclidicCubeScene::RenderCube(const Renderer& renderer)
 void scenes::CyclidicCubeScene::RenderPoints(const Renderer& renderer)
 {
     glm::vec3 pointBallSize = glm::vec3(0.05f, 0.05f, 0.05f);
-    glm::vec3 staticPointBallColor = glm::vec3(0.88f, 0.58f, 0.47f);
-    glm::vec3 danamicPointBallColor = glm::vec3(0.92f, 0.96f, 0.97f);
-    glm::vec3 calculatedPointBallColor = glm::vec3(0.51f, 0.86f, 0.43f);
+    glm::vec3 staticPointBallColor = glm::vec3(1.0f, 0.3f, 0.3f);
+    glm::vec3 danamicPointBallColor = glm::vec3(0.3f, 1.0f, 0.3f);
+    glm::vec3 calculatedPointBallColor = glm::vec3(0.f, 0.3f, 1.0f);
 
     {
         shadedColor.Bind();
@@ -231,6 +231,9 @@ void scenes::CyclidicCubeScene::RenderCircles(const Renderer& renderer)
     glm::vec3 rotationAxis;
     float rotationAngle;
     mathCalc::CircleData circles[] = { sideA , sideB, sideC, sideD, sideE, sideF };
+    glm::vec3 staticColor = glm::vec3(0.2f, 0.2f, 0.2f);
+    glm::vec3 dinamicColor = glm::vec3(0.7f, 0.7f, 0.3f);
+    glm::vec3 circleColors[] = { staticColor, staticColor, staticColor, dinamicColor, dinamicColor, dinamicColor };
 
     for(int i = 0; i < 6; i++)
     {
@@ -262,16 +265,88 @@ void scenes::CyclidicCubeScene::RenderCircles(const Renderer& renderer)
         shadedColor.SetUnifromVec3f("lightPos", glm::vec3(0.0f, 5.0f, 0.0f));
         shadedColor.SetUnifromVec3f("viewPos", view[3]);
         shadedColor.SetUnifromVec3f("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-        shadedColor.SetUnifromVec3f("objectColor", glm::vec3(0.55f, 0.55f, 0.55f));
+        shadedColor.SetUnifromVec3f("objectColor", circleColors[i]);
         renderer.DrawTriangles(tube.GetVertexArray(), tube.GetIndexBuffer(), shadedColor);
+    }
+}
+
+void scenes::CyclidicCubeScene::RenderSingularPoints(const Renderer& renderer)
+{
+    float UvScale = 50.0f;
+
+    {
+        singularPointsShader.Bind();
+        glm::mat4 model =
+            glm::rotate(glm::mat4(1.0f), glm::pi<float>() / 2, glm::vec3(1.0f, 0.0f, 0.0f)) * 
+            glm::scale(glm::mat4(1.0f), glm::vec3(UvScale, UvScale, UvScale));
+        glm::mat4 mvp = camera.GetProjectionView() * model;
+        singularPointsShader.SetUnifromMat4f("MVP", mvp);
+        singularPointsShader.SetUnifrom1f("UvScale", UvScale);
+        //singularPointsShader2.SetUnifromVec3f("p1", p4);
+        //singularPointsShader2.SetUnifromVec3f("p2", p6);
+        //singularPointsShader2.SetUnifromVec3f("p3", p5);
+        //singularPointsShader2.SetUnifromVec3f("p4", p7);
+        //singularPointsShader2.SetUnifromVec3f("v1", glm::vec3(-1.0f, 0.0f, 0.0f));
+        //singularPointsShader2.SetUnifromVec3f("v2", glm::vec3(0.0f, 0.0f, -1.0f));
+        singularPointsShader.SetUnifrom1f("a", p3Slider);
+        singularPointsShader.SetUnifrom1f("b", p6Slider);
+        singularPointsShader.SetUnifrom1f("c", p5Slider);
+        singularPointsShader.SetUnifrom1i("sCase", 1);
+        renderer.DrawTriangles(plain.GetVertexArray(), plain.GetIndexBuffer(), singularPointsShader);
+    }
+
+    {
+        singularPointsShader.Bind();
+        glm::mat4 model = 
+            //glm::rotate(glm::mat4(1.0f), glm::pi<float>() / 2, glm::vec3(1.0f, 0.0f, 0.0f)) * 
+            glm::scale(glm::mat4(1.0f), glm::vec3(UvScale, UvScale, UvScale));
+        glm::mat4 mvp = camera.GetProjectionView() * model;
+        singularPointsShader.SetUnifromMat4f("MVP", mvp);
+        singularPointsShader.SetUnifrom1f("UvScale", UvScale);
+        //singularPointsShader2.SetUnifromVec3f("p1", p4);
+        //singularPointsShader2.SetUnifromVec3f("p2", p6);
+        //singularPointsShader2.SetUnifromVec3f("p3", p5);
+        //singularPointsShader2.SetUnifromVec3f("p4", p7);
+        //singularPointsShader2.SetUnifromVec3f("v1", glm::vec3(-1.0f, 0.0f, 0.0f));
+        //singularPointsShader2.SetUnifromVec3f("v2", glm::vec3(0.0f, 0.0f, -1.0f));
+        singularPointsShader.SetUnifrom1f("a", p3Slider);
+        singularPointsShader.SetUnifrom1f("b", p6Slider);
+        singularPointsShader.SetUnifrom1f("c", p5Slider);
+        singularPointsShader.SetUnifrom1i("sCase", 2);
+        renderer.DrawTriangles(plain.GetVertexArray(), plain.GetIndexBuffer(), singularPointsShader);
+    }
+
+    {
+        singularPointsShader.Bind();
+        glm::mat4 model =
+            glm::rotate(glm::mat4(1.0f), glm::pi<float>() / 2, glm::vec3(0.0f, 0.0f, 1.0f)) *
+            glm::scale(glm::mat4(1.0f), glm::vec3(UvScale, UvScale, UvScale));
+        glm::mat4 mvp = camera.GetProjectionView() * model;
+        singularPointsShader.SetUnifromMat4f("MVP", mvp);
+        singularPointsShader.SetUnifrom1f("UvScale", UvScale);
+        //singularPointsShader2.SetUnifromVec3f("p1", p4);
+        //singularPointsShader2.SetUnifromVec3f("p2", p6);
+        //singularPointsShader2.SetUnifromVec3f("p3", p5);
+        //singularPointsShader2.SetUnifromVec3f("p4", p7);
+        //singularPointsShader2.SetUnifromVec3f("v1", glm::vec3(-1.0f, 0.0f, 0.0f));
+        //singularPointsShader2.SetUnifromVec3f("v2", glm::vec3(0.0f, 0.0f, -1.0f));
+        singularPointsShader.SetUnifrom1f("a", p3Slider);
+        singularPointsShader.SetUnifrom1f("b", p6Slider);
+        singularPointsShader.SetUnifrom1f("c", p5Slider);
+        singularPointsShader.SetUnifrom1i("sCase", 3);
+        renderer.DrawTriangles(plain.GetVertexArray(), plain.GetIndexBuffer(), singularPointsShader);
     }
 }
 
 void scenes::CyclidicCubeScene::CalculatePoints()
 {
-    p6 = mathCalc::CalculatePointInCircle(sideA, (p6Slider * 0.99f + 0.25f) * glm::pi<float>());
-    p3 = mathCalc::CalculatePointInCircle(sideB, (p3Slider * 0.99f - 0.249f) * glm::pi<float>());
-    p5 = mathCalc::CalculatePointInCircle(sideC, (p5Slider * 0.99f - 0.75f) * glm::pi<float>());
+    modifiedP6Slider = (p6Slider * 0.99f + 0.25f) / 2;
+    modifiedP3Slider = (p3Slider * 0.99f - 0.249f) / 2;
+    modifiedP5Slider = (p5Slider * 0.99f - 0.75f) / 2;
+
+    p6 = mathCalc::CalculatePointInCircle(sideA, modifiedP6Slider * glm::pi<float>() * 2);
+    p3 = mathCalc::CalculatePointInCircle(sideB, modifiedP3Slider * glm::pi<float>() * 2);
+    p5 = mathCalc::CalculatePointInCircle(sideC, modifiedP5Slider * glm::pi<float>() * 2);
 
     sideF = mathCalc::GetCircleDataFrom3Points(p1, p3, p5);
     sideE = mathCalc::GetCircleDataFrom3Points(p4, p6, p5);
@@ -289,14 +364,16 @@ void scenes::CyclidicCubeScene::CalculatePoints()
 }
 
 scenes::CyclidicCubeScene::CyclidicCubeScene() :
-    plain(30),
+    plain(50),
     sphere(1, 10, 10),
-    tube(mathCalc::GenerateCircularPoints(30), 10, 0.02f, true),
+    tube(mathCalc::GenerateCircularPoints(40), 10, 0.02f, true),
     cyclideCubeSideShader("res/shaders/CyclideCubeSide.shader"),
     shadedColor("res/shaders/ShadedColor.shader"),
-    p3Slider(0.505f),
-    p5Slider(0.505f),
-    p6Slider(0.505f),
+    singularPointsShader("res/shaders/SingularityTexture.shader"),
+    singularPointsShader2("res/shaders/SingularityTexture 2.shader"),
+    p3Slider(0.073f),
+    p5Slider(0.358f),
+    p6Slider(0.174f),
     sideA(mathCalc::GetCircleDataFrom3Points(p0, p2, p4)),
     sideB(mathCalc::GetCircleDataFrom3Points(p0, p1, p2)),
     sideC(mathCalc::GetCircleDataFrom3Points(p0, p4, p1))
@@ -330,6 +407,8 @@ void scenes::CyclidicCubeScene::RenderScene(const Renderer& renderer, glm::mat4 
     {
         RenderCircles(renderer);
     }
+
+    RenderSingularPoints(renderer);
 
     ImGui::Begin("Cyclidic Cube Controls");
     ImGui::SliderFloat("Point p3", &p3Slider, 0.0f, 1.0f);

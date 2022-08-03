@@ -12,6 +12,9 @@ namespace scenes
 		float p3Slider;
 		float p5Slider;
 		float p6Slider;
+		float modifiedP3Slider;
+		float modifiedP5Slider;
+		float modifiedP6Slider;
 		bool wireframeToggle = false;
 		bool pointToggle = false;
 		bool cubeToggle = true;
@@ -44,14 +47,19 @@ namespace scenes
 
 		Shader cyclideCubeSideShader;
 		Shader shadedColor;
+		Shader singularPointsShader;
+		Shader singularPointsShader2;
 
 		void RenderCube(const Renderer& renderer);
 		void RenderPoints(const Renderer& renderer);
 		void RenderCircles(const Renderer& renderer);
+		void RenderSingularPoints(const Renderer& renderer);
 		void CalculatePoints();
 
 	public:
 		CyclidicCubeScene();
+
+		glm::vec3 sceneCenter = glm::vec3(0.5f, 0.5f, 0.5f);
 
 		void RenderScene(const Renderer& renderer, glm::mat4 newView);
 	};

@@ -25,7 +25,7 @@ namespace scenes
         dupinPatchShader("res/shaders/DupinPatch.shader"),
         shadedColor("res/shaders/ShadedColor.shader"),
         tube(generateCircularPoints(50), 10, 0.02f, true),
-        plane(30),
+        plane(20),
         sphere(1),
         p1Slider(0.0f),
         p2Slider(0.25f),
@@ -91,7 +91,7 @@ namespace scenes
             dupinPatchShader.SetUnifromVec3f("lightPos", lightPos);
             dupinPatchShader.SetUnifromVec3f("viewPos", viewPos);
             dupinPatchShader.SetUnifromVec3f("lightColor", lightColor);
-            dupinPatchShader.SetUnifromVec3f("objectColor", glm::vec3(1.0f, 0.3f, 1.0f));
+            dupinPatchShader.SetUnifromVec3f("objectColor", glm::vec3(0.3f, 0.3f, 1.0f));
             renderer.DrawTriangles(plane.GetVertexArray(), plane.GetIndexBuffer(), dupinPatchShader);
         }
 
@@ -162,7 +162,6 @@ namespace scenes
         ImGui::SliderFloat("Point p2", &p2Slider, 0.0f, 1.0f);
         ImGui::SliderFloat("Point p3", &p3Slider, 0.0f, 1.0f);
         ImGui::SliderFloat("Point p4", &p4Slider, 0.0f, 1.0f);
-        ImGui::SliderInt("Size", &size, -10, 10);
         ImGui::SliderFloat("Angle", &angle, -5.0f, 5.0f);
         ImGui::Checkbox("Wireframe", &wireframeToggle);
         ImGui::End();

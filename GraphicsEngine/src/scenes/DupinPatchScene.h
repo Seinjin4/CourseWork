@@ -29,6 +29,8 @@ namespace scenes
 	public:
 		DupinPatchScene();
 
+		glm::vec3 sceneCenter = glm::vec3(0.0f, 0.0f, 0.0f);
+
 		void RenderScene(const Renderer& renderer, glm::mat4 newView);
 	};
 }

@@ -21,6 +21,7 @@
 #include <scenes/TubeTestScene.h>
 #include <scenes/SphereTestScene.h>
 #include <scenes/CyclidicCubeScene.h>
+#include <scenes/PlaneTestScene.h>
 
 int main(void)
 {
@@ -61,9 +62,10 @@ int main(void)
         scenes::CyclidicCubeScene scene;
         //scenes::SphereTestScene scene;
         //scenes::TubeTestScene scene;
+        //scenes::PlaneTestScene scene;
 
         Renderer renderer;
-        renderer.SetClearColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+        renderer.SetClearColor(glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 
         ImGui::CreateContext();
         ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -84,10 +86,10 @@ int main(void)
 
             glm::mat4 view = glm::lookAt(
                 glm::vec3(
-                    0.5f + glm::cos(glm::radians(360.0f) * cameraPosW) * cameraDist,
+                    glm::cos(glm::radians(360.0f) * cameraPosW) * cameraDist,
                     cameraHeight,
-                    0.5f + glm::sin(glm::radians(360.0f) * cameraPosW) * cameraDist),
-                glm::vec3(0.5f, 0.0f, 0.5f),
+                    glm::sin(glm::radians(360.0f) * cameraPosW) * cameraDist) + scene.sceneCenter,
+                scene.sceneCenter,
                 glm::vec3(0.0f, 1.0f, 0.0f)
                 );
 
@@ -97,7 +99,7 @@ int main(void)
                 ImGui::Begin("Camera Controls");
                 ImGui::SliderFloat("Camera Position", &cameraPosW, 0.0f, 1.0f);
                 ImGui::SliderFloat("Camera Height", &cameraHeight, -10.0f, 10.0f);
-                ImGui::SliderFloat("Camera Distance", &cameraDist, 1.0f, 10.0f);
+                ImGui::SliderFloat("Camera Distance", &cameraDist, 1.0f, 30.0f);
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
                 ImGui::End();
             }

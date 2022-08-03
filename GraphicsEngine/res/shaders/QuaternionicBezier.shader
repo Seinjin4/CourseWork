@@ -36,7 +36,7 @@ void main()
     vec4 newPoint = quat_mult(numer, getInverse(denom));
 
     gl_Position = u_MVP * vec4(newPoint.x, newPoint.y, newPoint.z, 1.0f);
-    v_color = vec4(newPoint.w, 1.0f, 1.0f, 1.0f);
+    v_color = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 };
 
 #shader fragment
